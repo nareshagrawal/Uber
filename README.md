@@ -3,6 +3,8 @@
 ## Objective
 Deploy frontend on AKS and backend on EKS cluster using Helm Charts via Jenkins CI/CD pipeline
 
+#### Link to Project Organization:  <a href="https://github.com/DevOps-Spring2021">https://github.com/DevOps-Spring2021</a>
+
 ### Maintainer
 <table>
     <thead>
@@ -67,5 +69,3 @@ $ cd App-prereq-helm-chart
 ```
 
 #### Detailed README will find in respective folders
-
-#### Link to Project Organization:  <a href="https://github.com/DevOps-Spring2021">https://github.com/DevOps-Spring2021</a>
