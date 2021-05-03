@@ -1,0 +1,79 @@
+---
+- name: get vpc id
+  ec2_vpc_net_facts:
+    region: "{{ region }}"
+    filters:
+      "tag:Name": "{{vpc_name}}"
+  register: vpc_info
+
+
+- name: Gather EC2 facts
+  ec2_instance_info:
+    region: "{{ region }}"
+    filters:
+      {tag-key: "{{ key }}", tag-value: "{{ value }}", instance-state-name: running} 
+  register: ec2
+    
+
+- name: Terminate EC2 Instance(s)
+  ec2:
+    instance_ids: '{{ item.instance_id }}'
+    state: absent
+    region: "{{ region }}"
+    wait: yes 
+  with_items: "{{ ec2.instances }}"
+  
+
+- name: delete subnet
+  ec2_vpc_subnet:
+    state: absent
+    vpc_id: "{{vpc_info.vpcs[0].vpc_id}}"
+    cidr: "{{subnet_cidr}}"
+    region: "{{ region }}"
+  register: vpc_subnet
+
+ 
+- name: delete igw
+  ec2_vpc_igw:
+    vpc_id: "{{vpc_info.vpcs[0].vpc_id}}"
+    state: absent
+  register: igw
+
+
+- name: Security group info 
+  ec2_group_facts:
+    filters:
+      group-name: "{{securitygroup_name}}"
+  register: security_details
+
+   
+- name: Delete group
+  ec2_group:
+    description: Jenkins Security Group
+    region: "{{ region }}"
+    group_id: "{{security_details.security_groups[0].group_id}}"
+    state: absent
+
+- name: Get route table details
+  ec2_vpc_route_table_info:
+    region: "{{ region }}"
+    filters:
+      "tag:Name": "{{route_name}}"
+  register: route_details
+
+   
+- name: Delete routing table
+  ec2_vpc_route_table:
+    route_table_id: "{{route_details.route_tables[0].id}}"
+    lookup: id  
+    state: absent
+  register: route
+
+   
+- name: Delete vpc
+  ec2_vpc_net:
+    name: "{{ vpc_name }}" 
+    cidr_block: "{{ vpc_cidr }}"
+    region: "{{ region }}"
+    state: absent
+  register: my_vpc

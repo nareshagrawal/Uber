@@ -1,0 +1,15 @@
+---
+- hosts: local
+  gather_facts: false
+  user: root
+
+  roles:
+    - {role: 'create', tags: 'create'}
+  
+- hosts: webservers
+  gather_facts: false
+  remote_user: ubuntu
+  become: yes
+  roles:
+    - {role: 'jenkins', tags: 'create'}
+...

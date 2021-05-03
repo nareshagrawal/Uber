@@ -1,0 +1,18 @@
+# Default values for efk_stack.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace:
+  name: logging
+
+rest_port: 9200
+
+elasticsearch_statefullset:
+  replicas: 3
+
+kibana_deployment:
+  replicas: 1
+
+nameOverride: ""
+fullnameOverride: ""
+

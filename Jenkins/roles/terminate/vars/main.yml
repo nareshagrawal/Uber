@@ -1,0 +1,11 @@
+---
+# vars file for terminate
+
+region: "us-east-1"
+vpc_name: "VPC"
+key: app
+value: jenkins
+subnet_cidr: 10.10.0.0/26
+securitygroup_name: "Jenkins_Security_Group"
+route_name: "Jenkins_Route"
+vpc_cidr: 10.10.0.0/24

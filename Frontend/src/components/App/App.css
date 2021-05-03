@@ -1,0 +1,133 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.dropdown-location {
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+}
+
+.main-div {
+  height: calc(100vh - 8rem);
+}
+
+.login-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+@media screen and (max-width: 992px) {
+  .login-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width:600px) {
+  .login-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+.ride-mobile{
+  overflow: hidden;
+}
+
+@media screen and (max-width:600px) {
+  .ride-mobile{
+    overflow: auto;
+  }
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pointer {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+.my-comment-dropdown{
+  height: 100%;
+  width: 100%;
+}
+.dropdown-toggle{
+  width: 100%;
+}
+.dropdown-menu {
+  width: 100%;
+  z-index: 2;
+}
+.ml-logout{
+  margin-left: auto;
+}
+
+@media screen and (max-width: 992px) {
+  .ml-logout{
+    margin-left: 0;
+  }
+}
+
+.verticalLine {
+  border-left: solid #000000;
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  height: 100%;
+}
+
+.navbar-text{
+  font-size:small;
+  padding: 0px;
+}

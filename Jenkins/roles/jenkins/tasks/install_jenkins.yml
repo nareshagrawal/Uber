@@ -1,0 +1,43 @@
+---
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: install openjdk
+  apt:
+    name: openjdk-11-jdk
+    state: latest
+  become: true
+
+- name: install maven
+  apt:
+    name: maven
+  become: true
+
+- name: ensure the jenkins apt repository key is installed
+  apt_key:
+   url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+   state: present
+  become: true
+
+- name: ensure the repository is configured
+  apt_repository:
+   repo: deb https://pkg.jenkins.io/debian-stable binary/
+   state: present
+  become: true
+
+- name: ensure jenkins is installed
+  apt:
+    name: jenkins
+    update_cache: yes
+  become: true
+
+- name: ensure jenkins is running
+  service:
+   name: jenkins
+   state: started
+  become: true
+...

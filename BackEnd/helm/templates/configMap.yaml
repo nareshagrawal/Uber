@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ .Values.configmap.name }}-{{ .Release.Name }}
+    labels:
+     {{- include "backend.labels" . | nindent 5 }}
+data:
+    DBendpoint: {{ .Values.configmap.RDS_CONNECTION_STRING }}
+    DBname: {{ .Values.configmap.RDS_DB_NAME }}

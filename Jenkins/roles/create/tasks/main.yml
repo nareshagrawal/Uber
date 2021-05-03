@@ -1,0 +1,5 @@
+---
+# tasks file for create
+- include: networkSetup.yml
+- include: ec2Instance_Launch.yml
+...

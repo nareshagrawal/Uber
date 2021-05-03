@@ -1,0 +1,6 @@
+---
+# tasks file for jenkins
+- include: install_jenkins.yml
+- include: install_docker.yml
+- include: install_kubectl.yml
+- include: install_iam_authenticator.yml

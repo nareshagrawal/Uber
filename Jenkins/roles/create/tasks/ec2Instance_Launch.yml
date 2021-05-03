@@ -1,0 +1,34 @@
+#Creating and Launching EC2 instance
+- name: Create a Ec2 Instance
+  ec2_instance:
+    key_name: aws
+    instance_type : "{{ instance_type }}"
+    image_id: ami-0817d428a6fb68645
+    security_group: "{{ security_group.group_id }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    tenancy: default
+    network:
+      assign_public_ip: false
+    state: running
+    tags:
+      Name: jenkins
+      app: jenkins
+    wait: yes
+  register : jenkins_ec2
+
+# Associate Elastic IP
+- name: Associate public ip
+  ec2_eip:
+    region: "{{ region }}"
+    device_id: "{{ jenkins_ec2.instance_ids[0] }}"
+    ip: "{{ elastic_ip }}"
+
+# Adding host
+- name: Add new instance to host group
+  add_host:
+    groupname: webservers
+    hostname: "{{ elastic_ip }}"
+    ansible_ssh_user: ubuntu
+    host_key_checking: false
+...
+

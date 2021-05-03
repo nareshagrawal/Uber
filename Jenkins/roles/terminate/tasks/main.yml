@@ -1,0 +1,3 @@
+---
+# tasks file for terminate
+- include: terminate.yml

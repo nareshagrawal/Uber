@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: false
+  user: root
+
+  roles:
+    - {role: 'terminate', tags: 'terminate'}

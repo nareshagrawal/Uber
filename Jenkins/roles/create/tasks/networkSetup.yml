@@ -1,0 +1,79 @@
+---
+# Creating VPC
+- name: Create VPC
+  amazon.aws.ec2_vpc_net:
+    name: "{{ vpc_name}}"
+    region: "{{ region }}"
+    cidr_block: "{{ vpc_cidr }}"
+    dns_hostnames: yes
+    dns_support: yes
+    state: "present"
+  register: vpc
+
+# Setting VPC ID in a variable
+- name: Set VPC ID in variable
+  set_fact:
+    vpc_id: "{{ vpc.vpc.id }}"
+
+# Creating Subnets
+- name: Create Subnet
+  ec2_vpc_subnet:
+    state: present
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    cidr: "{{ subnet_cidr}}"
+    map_public: yes
+    resource_tags:
+      Name: "{{ subnet_name }}"
+  register: subnet
+
+# Creating Internet Gateway
+- name: Create IGW
+  community.aws.ec2_vpc_igw:
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ region }}"
+    state: "present"
+    tags:
+      Name: "{{ igw_name }}"
+  register: igw
+
+# Creating Routing table and Attaching it to subnet and Internet Gateway
+- name: Create Route Table
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ region }}"
+    subnets:
+    - "{{ subnet.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id  }}"
+    tags:
+      Name: "{{ route_name }}"
+
+# Creating Security Group to allow SSH And TCP.
+- name: Create Security Group
+  ec2_group:
+    name: "{{ securitygroup_name }}"
+    description: Jenkins Security Group
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_id }}"
+    rules:
+      - proto: tcp
+        ports:
+        - 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        ports:
+        - 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        ports:
+          - 443
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        ports:
+        - 8080
+        cidr_ip: 0.0.0.0/0
+  register: security_group
+...
+

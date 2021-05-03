@@ -1,0 +1,21 @@
+---
+# vars file for create
+
+region: "us-east-1"
+# VPC
+vpc_cidr: 10.10.0.0/24
+vpc_name: "VPC"
+
+# Subnet
+subnet_name: "Jenkins_Subnet"
+subnet_cidr: 10.10.0.0/26
+
+# Internet Gateway Name
+igw_name: "IGW"
+
+# Route Table
+route_name: "Jenkins_Route"
+
+securitygroup_name: "Jenkins_Security_Group"
+
+# hosted_zone_id: "Z0709337QHQ831WTBIC9"

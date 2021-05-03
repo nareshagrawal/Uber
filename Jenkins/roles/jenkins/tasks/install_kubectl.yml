@@ -1,0 +1,22 @@
+---
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+      upgrade: yes
+      update_cache: yes
+
+- name: Kubectl Installation
+  shell: |
+     curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+     sudo chmod +x ./kubectl
+     sudo mv ./kubectl /usr/local/bin/kubectl
+     kubectl version --client
+
+- name: Helm Installation
+  shell: |
+     sudo wget https://get.helm.sh/helm-v3.4.0-linux-amd64.tar.gz
+     sudo tar -zxvf helm-v3.4.0-linux-amd64.tar.gz
+     sudo mv linux-amd64/helm /usr/local/bin/helm
+
+- name: Print password
+  command: "sudo cat /var/lib/jenkins/secrets/initialAdminPassword"
